@@ -10,29 +10,50 @@ namespace Desafio1
     {
         static void Main(string[] args)
         {
-            Console.Write("Digite uma palavra: ");
-            string paraVerificar = Console.ReadLine();
-            int count = paraVerificar.Length;
-            char[] aux = new char[count];
-            aux = paraVerificar.ToCharArray();
+            Console.Write("Informe uma lista de números separados por espaço: ");
+            string lista = Console.ReadLine();
 
-            bool flag = false;
+            string[] numeros = lista.Split(' ');
 
-            for (int i = 1; i <= count; i++)
+            List<int> inteiros = new List<int>();
+            List<int> ordenados = new List<int>();
+
+            for (int i = 0; i < numeros.Length; i++)
             {
-                if (aux[i - 1] == aux[count - i])
+                inteiros.Add(int.Parse(numeros[i]));
+            }
+
+            int menor = 0;
+            bool flag = true;
+
+            while (flag)
+            {
+                int N = 999999999;
+
+                for (int i = 0; i < inteiros.Count; i++)
                 {
-                    flag = true;
+                    if (inteiros[i] < N)
+                    {
+                        menor = inteiros[i];
+                        N = menor;
+                    }
+                }
+
+                if (!ordenados.Contains(menor))
+                {
+                    ordenados.Add(menor);
+                    inteiros.Remove(menor);
+                }
+
+                if (inteiros.Count == 0)
+                {
+                    flag = false;
                 }
             }
 
-            if (flag == false)
+            foreach (var item in ordenados)
             {
-                Console.WriteLine($"A string {paraVerificar} não é um palíndromo.");
-            }
-            else
-            {
-                Console.WriteLine($"A string {paraVerificar} é um palíndromo.");
+                Console.Write(item.ToString() + " ");
             }
         }
     }
